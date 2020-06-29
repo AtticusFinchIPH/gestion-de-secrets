@@ -73,6 +73,7 @@ button {
   border: #ff8000;
   border-radius: 0.5rem;
   width: 100%;
+  cursor: pointer;
 }
 button:hover{
   background-color: #ff5100;
