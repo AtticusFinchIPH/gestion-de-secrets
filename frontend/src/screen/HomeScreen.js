@@ -1,11 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {useDispatch} from 'react-redux';
+import { createSecret } from '../actions/createSecretActions';
+import axios from 'axios';
 
 function HomeScreen(props){
     const [secret, setSecret] = useState('');
     const [password, setPassword] = useState('');
     const [lifetime, setLifetime] = useState(1);
 
+    const dispatch = useDispatch();
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         const {data} = await axios.get("/api/get");
+    //         console.log(`data: ${data}`);
+    //     }
+    //     fetchData();
+    //     return() => {
+    //         //
+    //     }
+    // }, [])
+    const submitSecret = (e) => {
+        e.preventDefault();
+        dispatch(createSecret({secret, password, lifetime}));
+    }
     return(
     <>
         <form className="input-section">
@@ -34,7 +51,7 @@ function HomeScreen(props){
             </select>
         </form>
         <div className="link-section">
-            <button>Créer un lien secret</button>
+            <button onClick={submitSecret}>Créer un lien secret</button>
         </div>
     </>
     );
