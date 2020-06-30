@@ -3,8 +3,13 @@ import {BrowserRouter, Route, Link} from 'react-router-dom';
 import './App.css';
 import HomeScreen from './screen/HomeScreen';
 import SigninScreen from './screen/SigninScreen';
+import { useSelector } from 'react-redux';
 
 function App() {
+
+  const userSignin = useSelector(state => state.userSignin);
+  const {userInfo} = userSignin;
+
   return (
     <BrowserRouter>
       <div className="grid-container">
@@ -13,7 +18,9 @@ function App() {
                 <Link to="/">New Secret</Link>
             </div>
             <div className="header-links">
-              <Link to="/signin">Sign In</Link>
+              {
+                userInfo ? <Link to="/admin">{userInfo.name}</Link> : <Link to="/signin">Sign In</Link>
+              }          
             </div>
         </header>
         <main className="main">

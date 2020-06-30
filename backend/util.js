@@ -15,4 +15,6 @@ const getToken = (user) => {
     )
 }
 
+const isAuth = 
+
 export {getToken};

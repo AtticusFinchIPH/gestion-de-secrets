@@ -108,6 +108,7 @@ button:hover{
 .pwd-label{
   grid-area: pwd-label;  
   text-align: right;
+  margin: 1rem;
 }
 .pwd-input{
   grid-area: pwd-input;  
@@ -115,6 +116,7 @@ button:hover{
 .lft-label{
   grid-area: lft-label;  
   text-align: right;
+  margin: 1rem;
 }
 .lft-input{
   grid-area: lft-input;  

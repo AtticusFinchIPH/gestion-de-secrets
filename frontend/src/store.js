@@ -1,12 +1,15 @@
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
+import Cookie from 'js-cookie';
 import { createSecretReducer } from './reducers/createSecretReducer';
 import { userSigninReducer } from './reducers/userReducer';
 
-const initialState = [];
+const userInfo = Cookie.getJSON('userInfo') || null;
+
+const initialState = { userSignin: { userInfo }};
 
 const reducer = combineReducers({
-    createSecret: createSecretReducer,
+    linkSecret: createSecretReducer,
     userSignin: userSigninReducer,
 });
 
