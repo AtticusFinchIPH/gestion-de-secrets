@@ -1,9 +1,10 @@
 import React from 'react';
 import {BrowserRouter, Route, Link} from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import './App.css';
 import HomeScreen from './screen/HomeScreen';
 import SigninScreen from './screen/SigninScreen';
-import { useSelector } from 'react-redux';
+import GetSecretScreen from './screen/GetSecretScreen';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
             <div className="content">
                 <Route exact={true} path="/" component={HomeScreen}/>
                 <Route path="/signin" component={SigninScreen}/>
+                <Route path="/secrets/:id" component={GetSecretScreen}/>
             </div>           
         </main>
         <footer className="footer">All right reserved</footer>
