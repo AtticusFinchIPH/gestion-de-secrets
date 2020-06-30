@@ -1,4 +1,4 @@
-import { CREATE_SECRET_REQUEST, CREATE_SECRET_SUCCESS, CREATE_SECRET_FAIL } from "../constants/createSecretConstants";
+import { CREATE_SECRET_REQUEST, CREATE_SECRET_SUCCESS, CREATE_SECRET_FAIL } from "../constants/secretConstants";
 
 function createSecretReducer(state = { link: ""}, action){
     switch (action.type){

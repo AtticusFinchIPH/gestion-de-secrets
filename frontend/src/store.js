@@ -1,7 +1,7 @@
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import Cookie from 'js-cookie';
-import { createSecretReducer } from './reducers/createSecretReducer';
+import { createSecretReducer } from './reducers/secretReducer';
 import { userSigninReducer } from './reducers/userReducer';
 
 const userInfo = Cookie.getJSON('userInfo') || null;

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CREATE_SECRET_REQUEST, CREATE_SECRET_SUCCESS, CREATE_SECRET_FAIL } from "../constants/createSecretConstants";
+import { CREATE_SECRET_REQUEST, CREATE_SECRET_SUCCESS, CREATE_SECRET_FAIL } from "../constants/secretConstants";
 
 const createSecret = ({secret, password, lifetime}) => async (dispatch) => {
     try {

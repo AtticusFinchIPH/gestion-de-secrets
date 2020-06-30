@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import { createSecret } from '../actions/createSecretActions';
+import { createSecret } from '../actions/secretActions';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 function HomeScreen(props){
