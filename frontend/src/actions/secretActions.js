@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CREATE_SECRET_REQUEST, CREATE_SECRET_SUCCESS, CREATE_SECRET_FAIL, GET_SECRET_REQUEST, GET_SECRET_SUCCESS, GET_SECRET_FAIL } from "../constants/secretConstants";
+import { CREATE_SECRET_REQUEST, CREATE_SECRET_SUCCESS, CREATE_SECRET_FAIL, GET_SECRET_REQUEST, GET_SECRET_SUCCESS, GET_SECRET_FAIL, REFRESH_SECRET, POLLUTE_SECRET, REMOVE_SECRET_LINK } from "../constants/secretConstants";
 
 const createSecret = ({secret, password, lifetime}) => async (dispatch) => {
     try {
@@ -18,6 +18,12 @@ const createSecret = ({secret, password, lifetime}) => async (dispatch) => {
     }
 }
 
+const removeLink = () => (dispatch) => {
+    dispatch({
+        type: REMOVE_SECRET_LINK
+    })
+}
+
 const getSecret = ({ id, password }) => async (dispatch) => {
     try {
         const secret = {id, password};
@@ -32,4 +38,16 @@ const getSecret = ({ id, password }) => async (dispatch) => {
     }
 }
 
-export {createSecret, getSecret};
+const refreshSecret = () => (dispatch) => {
+    dispatch({
+        type: REFRESH_SECRET
+    })
+}
+
+const polluteSecret = () => (dispatch) => {
+    dispatch({
+        type: POLLUTE_SECRET
+    })
+}
+
+export {createSecret, getSecret, refreshSecret, polluteSecret, removeLink};

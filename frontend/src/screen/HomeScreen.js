@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import { createSecret } from '../actions/secretActions';
+import { createSecret, polluteSecret } from '../actions/secretActions';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 function HomeScreen(props){
@@ -9,7 +9,16 @@ function HomeScreen(props){
     const [lifetime, setLifetime] = useState(1);
     const linkSecret = useSelector(state => state.linkSecret);
     const { loading, link, error } = linkSecret;
+    const isFreshSecret = useSelector(state => state.isFreshSecret);
 
+    useEffect(() => {
+        if(isFreshSecret){
+            setSecret('');
+            setPassword('');
+            setLifetime(1);
+        }
+        console.log(isFreshSecret);
+    }, [isFreshSecret])
     const dispatch = useDispatch();
     const submitSecret = (e) => {
         e.preventDefault();
@@ -26,6 +35,9 @@ function HomeScreen(props){
         }
         return true;
     }
+    const makePollution = () => {
+        dispatch(polluteSecret());
+    }
     return(
     <>
         <form className="input-section">
@@ -36,18 +48,30 @@ function HomeScreen(props){
                 Ne stockez aucune information confidentielle dans vos emails ou fils de discussion
             </p>
             <textarea rows="10" cols="80" 
-                onChange={(e) => setSecret(e.target.value)}
+                onChange={(e) => {
+                    makePollution();
+                    setSecret(e.target.value)}
+                }
+                value={secret} readOnly={link ? true : false}
                 placeholder="Votre contenu secret est à coller ici">           
             </textarea>
         </form>
         <form className="keys-section">
             <label htmlFor="pwd" className="pwd-label">Mot de passe:</label>
             <input id="pwd" name="pdw" className="pwd-input" type="text" 
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                    makePollution();
+                    setPassword(e.target.value)}
+                }
+                value={password}  readOnly={link ? true : false}
                 placeholder="Un mot ou une phrase qui est difficile à deviner"/>
             <label htmlFor="lifetime" className="lft-label">Lifetime:</label>
             <select id="lifetime" name="lifetime" className="lft-input"
-                onChange={(e) => setLifetime(e.target.value)}>
+                onChange={(e) => {
+                    makePollution();
+                    setLifetime(e.target.value)}
+                }
+                value={lifetime} disabled={link ? true : false}>
                 <option value="1">15 minutes</option>
                 <option value="2">24 hours</option>
                 <option value="3">1 week</option>
@@ -63,7 +87,7 @@ function HomeScreen(props){
                         <input id="link" name="link" className="link-input" value={link} readOnly={true}/>
                         <div className="link-clipboard">
                             <CopyToClipboard text={link}>
-                                <i class="fa fa-clipboard fa-lg" aria-hidden="true" title="Copy to clipboard"></i>
+                                <i className="fa fa-clipboard fa-lg" aria-hidden="true" title="Copy to clipboard"></i>
                             </CopyToClipboard>
                         </div>
                     </div>

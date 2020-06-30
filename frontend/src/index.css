@@ -38,6 +38,7 @@ body{
 .header-links a{
   color: #ffffff;
   text-decoration: none;
+  padding-right: 1rem;
 }
 .header-links a:hover{
   color: #ff8000;
