@@ -4,13 +4,12 @@ import { CREATE_SECRET_REQUEST, CREATE_SECRET_SUCCESS, CREATE_SECRET_FAIL } from
 const createSecret = ({secret, password, lifetime}) => async (dispatch) => {
     try {
         const newSecret = {secret, password, lifetime};
-        console.log(newSecret);
         dispatch({
             type: CREATE_SECRET_REQUEST,
             payload: newSecret
         })
         const { data } = await axios.post(
-            `/api/secret`,
+            `/api/secrets`,
             newSecret
         );
         console.log(data);

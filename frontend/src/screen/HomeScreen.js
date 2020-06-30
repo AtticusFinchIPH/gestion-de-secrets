@@ -1,27 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import {useDispatch} from 'react-redux';
+import React, { useState } from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import { createSecret } from '../actions/createSecretActions';
-import axios from 'axios';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 function HomeScreen(props){
     const [secret, setSecret] = useState('');
     const [password, setPassword] = useState('');
     const [lifetime, setLifetime] = useState(1);
+    const linkSecret = useSelector(state => state.linkSecret);
+    const { loading, link, error } = linkSecret;
 
     const dispatch = useDispatch();
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const {data} = await axios.get("/api/get");
-    //         console.log(`data: ${data}`);
-    //     }
-    //     fetchData();
-    //     return() => {
-    //         //
-    //     }
-    // }, [])
     const submitSecret = (e) => {
         e.preventDefault();
-        dispatch(createSecret({secret, password, lifetime}));
+        if(isValidate()) dispatch(createSecret({secret, password, lifetime}));
+    }
+    const isValidate = () => {
+        if(!secret) {
+            alert("Secret field must not be empty!");
+            return false;
+        }
+        if(!password) {
+            alert("Password must not be empty!");
+            return false;
+        }
+        return true;
     }
     return(
     <>
@@ -38,11 +41,11 @@ function HomeScreen(props){
             </textarea>
         </form>
         <form className="keys-section">
-            <label for="pwd" className="pwd-label">Mot de passe:</label>
+            <label htmlFor="pwd" className="pwd-label">Mot de passe:</label>
             <input id="pwd" name="pdw" className="pwd-input" type="text" 
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Un mot ou une phrase qui est difficile à deviner"/>
-            <label for="lifetime" className="lft-label">Lifetime:</label>
+            <label htmlFor="lifetime" className="lft-label">Lifetime:</label>
             <select id="lifetime" name="lifetime" className="lft-input"
                 onChange={(e) => setLifetime(e.target.value)}>
                 <option value="1">15 minutes</option>
@@ -51,7 +54,22 @@ function HomeScreen(props){
             </select>
         </form>
         <div className="link-section">
-            <button onClick={submitSecret}>Créer un lien secret</button>
+            {   
+                link 
+                ?   
+                (
+                    <div className="link-show">
+                        <label htmlFor="link" className="link-label">Votre lien secret:</label>
+                        <input id="link" name="link" className="link-input" value={link} readOnly={true}/>
+                        <div className="link-clipboard">
+                            <CopyToClipboard text={link}>
+                                <i class="fa fa-clipboard fa-lg" aria-hidden="true" title="Copy to clipboard"></i>
+                            </CopyToClipboard>
+                        </div>
+                    </div>
+                )
+                : <button onClick={submitSecret}>Créer un lien secret</button>
+            }
         </div>
     </>
     );

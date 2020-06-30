@@ -129,6 +129,28 @@ button:hover{
   width: 60rem;
   padding: 1rem;
 }
+.link-show{
+  display: grid;
+  grid-template-areas: "link-label link-input link-clipboard";
+  grid-template-columns: 2fr 5fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 1rem;
+  width: 100%;
+}
+.link-label{
+  grid-area: link-label;
+  text-align: right;
+  margin: 1rem;
+}
+.link-input{
+  grid-area: link-input;
+}
+.link-clipboard{
+  grid-area: link-clipboard;
+  margin: auto;
+  color: #ff8000;
+  cursor: pointer;
+}
 
 /* Signin Screen */
 .form {
