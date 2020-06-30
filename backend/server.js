@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import config from './config';
 import mongoose from 'mongoose';
 import userRoute from './routes/userRoute';
+import bodyParse from 'body-parser';
 
 dotenv.config();
 
@@ -15,9 +16,10 @@ mongoose.connect(mongodbUrl, {
 
 const app = express();
 
+app.use(bodyParse.json());
 app.use("/api/users", userRoute);
 
-app.get("/api/get", (req, res) => {
+app.get("/api/sayHello", (req, res) => {
     res.send("Hello, come get me!");
 });
 
