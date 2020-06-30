@@ -128,7 +128,7 @@ button:hover{
   padding: 1rem;
 }
 
-/* forms */
+/* Signin Screen */
 .form {
   display: flex;
   justify-content: center;
@@ -154,4 +154,14 @@ input {
   padding: 1rem;
   border: 0.1rem #c0c0c0 solid;
   border-radius: 0.5rem;
+}
+.button-register{
+  padding: 1rem;
+  background-color: #f0f0f0;
+  border-radius: 0.5rem;
+  text-align: center;
+  cursor: pointer;
+}
+.button-register:hover{
+  border: 0.1rem #808080 solid;
 }
