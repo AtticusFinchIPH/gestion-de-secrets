@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { signin } from '../actions/userActions';
 
@@ -10,10 +10,10 @@ function SigninScreen(props) {
   const userSignin = useSelector(state => state.userSignin);
   const { loading, userInfo, error } = userSignin;
   const dispatch = useDispatch();
-  const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
+  const history = useHistory();
   useEffect(() => {
     if (userInfo) {
-      props.history.push(redirect);
+      history.replace("/admin");
     }
     return () => {
       //
@@ -23,7 +23,6 @@ function SigninScreen(props) {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(signin(email, password));
-
   }
   return <div className="form">
     <form onSubmit={submitHandler} >
@@ -54,7 +53,7 @@ function SigninScreen(props) {
           New to Secret Management?
         </li>
         <li>
-          <Link to={redirect === "/" ? "register" : "register?redirect=" + redirect} className="button-register" >Create your Secret account</Link>
+          <Link to="/register" className="button-register" >Create your Secret account</Link>
         </li>
       </ul>
     </form>

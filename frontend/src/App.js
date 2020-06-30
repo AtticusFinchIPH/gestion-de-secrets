@@ -5,6 +5,7 @@ import './App.css';
 import HomeScreen from './screen/HomeScreen';
 import SigninScreen from './screen/SigninScreen';
 import GetSecretScreen from './screen/GetSecretScreen';
+import AdminScreen from './screen/AdminScreen';
 
 function App() {
 
@@ -20,7 +21,7 @@ function App() {
             </div>
             <div className="header-links">
               {
-                userInfo ? <Link to="/admin">{userInfo.name}</Link> : <Link to="/signin">Sign In</Link>
+                userInfo ? <Link to="/admin">{userInfo.name}</Link> : <Link to="/signin">Access Manager</Link>
               }          
             </div>
         </header>
@@ -29,6 +30,7 @@ function App() {
                 <Route exact={true} path="/" component={HomeScreen}/>
                 <Route path="/signin" component={SigninScreen}/>
                 <Route path="/secrets/:id" component={GetSecretScreen}/>
+                <Route path="/admin" component={AdminScreen}/>
             </div>           
         </main>
         <footer className="footer">All right reserved</footer>
