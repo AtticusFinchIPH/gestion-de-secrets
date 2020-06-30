@@ -1,6 +1,7 @@
 import express from 'express';
 import Secret from '../models/secretModel'
-import { getToken } from '../util';
+
+const URL_CLIENT = "localhost:3000";
 
 const router = express.Router();
 
@@ -13,7 +14,7 @@ router.post("/", async (req, res) => {
     })
     const newSecret = await secret.save();
     if(newSecret){
-        return res.status(201).send(`/api/secrets/${newSecret._id}`);
+        return res.status(201).send(`${URL_CLIENT}/secrets/${newSecret._id}`);
     }
     return res.status(500).send({ msg: 'Error in creating Secret'});
 })

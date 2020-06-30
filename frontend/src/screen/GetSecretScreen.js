@@ -34,11 +34,12 @@ function GetSecretScreen(props){
                 readOnly={true} placeholder="">           
             </textarea>
         </form>
-        <form className="keys-section">
+        <form className="pwd-section">
             <label htmlFor="pwd" className="pwd-label">Mot de passe:</label>
             <input id="pwd" name="pdw" className="pwd-input" type="text" 
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Entrez votre mot de passe ici"/>
+            <div className="pwd-info">{error ? error : ''}</div>
         </form>
         <div className="link-section">
             <button onClick={submitPassword}>Envoyez votre mot de passe</button>

@@ -106,20 +106,20 @@ button:hover{
   width: 60rem;
   padding: 1rem;
 }
-.pwd-label{
+.keys-section .pwd-label{
   grid-area: pwd-label;  
   text-align: right;
   margin: 1rem;
 }
-.pwd-input{
+.keys-section .pwd-input{
   grid-area: pwd-input;  
 }
-.lft-label{
+.keys-section .lft-label{
   grid-area: lft-label;  
   text-align: right;
   margin: 1rem;
 }
-.lft-input{
+.keys-section .lft-input{
   grid-area: lft-input;  
 }
 .link-section{
@@ -189,4 +189,30 @@ input {
 }
 .button-register:hover{
   border: 0.1rem #808080 solid;
+}
+
+/* GetSecretScreen */
+.pwd-section{
+  display: grid;
+  grid-template-areas: 
+  "pwd-label pwd-input"
+  "pwd-info pwd-info";
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+  width: 60rem;
+  padding: 1rem;
+}
+.pwd-section .pwd-label{
+  grid-area: pwd-label;  
+  text-align: right;
+  margin: 1rem;
+}
+.pwd-section .pwd-input{
+  grid-area: pwd-input;  
+}
+.pwd-section .pwd-info{
+  grid-area: pwd-info; 
+  margin: auto;
+  color: #ff0000;
 }

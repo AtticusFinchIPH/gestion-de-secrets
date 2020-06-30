@@ -34,7 +34,7 @@ const getSecret = ({ id, password }) => async (dispatch) => {
         const {data} = await axios.post(`/api/secrets/id`, secret);
         dispatch({ type: GET_SECRET_SUCCESS, payload: data});
     } catch (error) {
-        dispatch({ type: GET_SECRET_FAIL, payload: error.message});
+        dispatch({ type: GET_SECRET_FAIL, payload: error.response.data.msg || error.message});
     }
 }
 
