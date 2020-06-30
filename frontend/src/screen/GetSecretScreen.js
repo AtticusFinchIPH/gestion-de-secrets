@@ -4,14 +4,14 @@ import { getSecret } from '../actions/secretActions';
 
 function GetSecretScreen(props){
     const secretId = props.match.params.id;
-    console.log(secretId);
-    const secret = '';
     const [password, setPassword] = useState('');
+    const secretObtain = useSelector(state => state.secretObtain);
+    const { loading, secret, error } = secretObtain;
 
     const dispatch = useDispatch();
     const submitPassword = (e) => {
         e.preventDefault();
-        if(isValidate()) dispatch(getSecret(secretId, password));
+        if(isValidate()) dispatch(getSecret({id: secretId, password}));
     }
     const isValidate = () => {
         if(!password) {

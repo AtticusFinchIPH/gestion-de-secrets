@@ -13,20 +13,24 @@ router.post("/", async (req, res) => {
     })
     const newSecret = await secret.save();
     if(newSecret){
-        // return res.status(201).send({ msg: 'New Secret created', data: newSecret});
         return res.status(201).send(`/api/secrets/${newSecret._id}`);
     }
     return res.status(500).send({ msg: 'Error in creating Secret'});
 })
 
-router.get("/:id", async (req, res) => {
-    const secretId = req.params.id;
-    const secret = await Secret.findById(secretId);
-    if(secret) {
-        res.status(200).send({ msg: "Password is correct", secret: secret.secret});
+router.post("/id", async (req, res) => {
+    const secretId = req.body.id;
+    const password = req.body.password;
+    if (secretId.match(/^[0-9a-fA-F]{24}$/)) {
+        const secret = await Secret.findById(secretId);
+        if(secret.password == password) {
+            res.status(200).send(secret.secret);
+        } else {
+            res.status(403).send({ msg: 'Wrong password'});
+        }
     } else {
         res.status(403).send({ msg: 'Secret Not Found'});
-    }
+    }  
 })
 
 router.get("/", async (req, res) => {

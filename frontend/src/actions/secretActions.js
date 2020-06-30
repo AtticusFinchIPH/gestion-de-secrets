@@ -12,7 +12,6 @@ const createSecret = ({secret, password, lifetime}) => async (dispatch) => {
             `/api/secrets`,
             newSecret
         );
-        // console.log(data);
         dispatch({ type: CREATE_SECRET_SUCCESS, payload: data });
     } catch (error) {
         dispatch({ type: CREATE_SECRET_FAIL, payload: error.message });
@@ -21,11 +20,12 @@ const createSecret = ({secret, password, lifetime}) => async (dispatch) => {
 
 const getSecret = ({ id, password }) => async (dispatch) => {
     try {
+        const secret = {id, password};
         dispatch({
             type: GET_SECRET_REQUEST,
-            payload: {id, password}
+            payload: secret
         })
-        const {data} = await axios.get('/api/secrets:id', {id, password});
+        const {data} = await axios.post(`/api/secrets/id`, secret);
         dispatch({ type: GET_SECRET_SUCCESS, payload: data});
     } catch (error) {
         dispatch({ type: GET_SECRET_FAIL, payload: error.message});
