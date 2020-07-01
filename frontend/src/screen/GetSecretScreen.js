@@ -30,7 +30,7 @@ function GetSecretScreen(props){
                 Le contenu du secret apparaîtrait ci-dessous avec un bon mot de passe
             </p>
             <textarea rows="10" cols="80" 
-                value={secret}
+                value={error ? '' : secret}
                 readOnly={true} placeholder="">           
             </textarea>
         </form>

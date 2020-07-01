@@ -8,7 +8,7 @@ function HomeScreen(props){
     const [password, setPassword] = useState('');
     const [lifetime, setLifetime] = useState(1);
     const linkSecret = useSelector(state => state.linkSecret);
-    const { loading, link, error } = linkSecret;
+    let { loading, link, error } = linkSecret;
     const isFreshSecret = useSelector(state => state.isFreshSecret);
 
     useEffect(() => {
@@ -84,9 +84,9 @@ function HomeScreen(props){
                 (
                     <div className="link-show">
                         <label htmlFor="link" className="link-label">Votre lien secret:</label>
-                        <input id="link" name="link" className="link-input" value={link} readOnly={true}/>
+                        <input id="link" name="link" className="link-input" value={window.location.hostname +":"+ window.location.port + link} readOnly={true}/>
                         <div className="link-clipboard">
-                            <CopyToClipboard text={link}>
+                            <CopyToClipboard text={window.location.hostname +":"+ window.location.port + link}>
                                 <i className="fa fa-clipboard fa-lg" aria-hidden="true" title="Copy to clipboard"></i>
                             </CopyToClipboard>
                         </div>
