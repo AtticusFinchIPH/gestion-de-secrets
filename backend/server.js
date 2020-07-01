@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import userRoute from './routes/userRoute';
 import secretRoute from './routes/secretRoute';
 import bodyParse from 'body-parser';
+import Secret from './models/secretModel';
 
 dotenv.config();
 
@@ -25,4 +26,16 @@ app.get("/api/sayHello", (req, res) => {
     res.send("Hello, come get me!");
 });
 
-app.listen(5000, () => {console.log("Server started at http://localhost:5000")});
+app.listen(5000, () => {
+    main();
+});
+
+const main = () => {
+    console.log("Server started at http://localhost:5000")
+    setInterval( async () => {
+        const deleted = await Secret.deleteMany({ $where: function(){ return this.expire < new Date().getTime()}});
+        if(deleted.deletedCount > 0) {
+            console.log(deleted.deletedCount +" secrets have been deleted.");   
+        }
+    }, 60000)
+}
