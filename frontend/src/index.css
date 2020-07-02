@@ -43,6 +43,26 @@ body{
 .header-links a:hover{
   color: #ff8000;
 }
+.user-options{
+  top: 5rem;
+  right: 0rem;
+  position: fixed;
+  transition: all .5s;
+  transform: translateX(20rem);
+  padding: 0.5rem 2rem 0 0;
+  color: #551a8a;
+}
+.user-options.open{
+  transform: translateX(0rem);
+  box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+  z-index: 1000;
+}
+.user-options ul{
+  list-style-type: none;
+}
+.user-options ul li{
+  margin-top: 1.5rem;
+}
 .main{
   grid-area: main;
 }
@@ -56,6 +76,7 @@ body{
 }
 a{
   text-decoration: none;
+  cursor: pointer;
 }
 a:hover{
   color: #ff8000;

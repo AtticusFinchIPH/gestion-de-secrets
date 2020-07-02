@@ -17,7 +17,6 @@ function HomeScreen(props){
             setPassword('');
             setLifetime(1);
         }
-        console.log(isFreshSecret);
     }, [isFreshSecret])
     const dispatch = useDispatch();
     const submitSecret = (e) => {
