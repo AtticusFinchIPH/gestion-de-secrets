@@ -1,6 +1,7 @@
 import express from 'express';
 import Secret from '../models/secretModel';
 import crypto from 'crypto';
+import { isAdmin, isAuth } from '../util';
 
 const router = express.Router();
 
@@ -58,7 +59,7 @@ router.post("/id", async (req, res) => {
 })
 
 // Get list of secret
-router.get("/", async (req, res) => {
+router.get("/", isAuth, isAdmin, async (req, res) => {
     const secrets = await Secret.find({});
     res.status(200).send(secrets);
 })

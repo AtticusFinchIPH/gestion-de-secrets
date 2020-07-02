@@ -35,7 +35,6 @@ router.get("/createadmin", async (req, res) => {
     } catch (error) {
         res.send({msg: error.message});
     }
-    
 })
 
 export default router;

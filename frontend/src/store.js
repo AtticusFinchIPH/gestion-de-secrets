@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import Cookie from 'js-cookie';
 import { createSecretReducer, getSecretReducer, refreshSecretReducer } from './reducers/secretReducer';
 import { userSigninReducer } from './reducers/userReducer';
+import { listSecretReducer } from './reducers/adminReducers';
 
 const userInfo = Cookie.getJSON('userInfo') || null;
 
@@ -12,7 +13,8 @@ const reducer = combineReducers({
     linkSecret: createSecretReducer,
     userSignin: userSigninReducer,
     secretObtain: getSecretReducer,
-    isFreshSecret: refreshSecretReducer 
+    isFreshSecret: refreshSecretReducer, 
+    listSecret: listSecretReducer
 });
 
 const composeEnhancer = window._REDUX_DEVTOOLS_EXTENSION_COMPOSE_ || compose;
