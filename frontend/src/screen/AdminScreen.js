@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getListSecret } from '../actions/adminActions';
 import { Redirect } from 'react-router';
 
 function AdminScreen(props){
-    const [isAllow, setAllow] = useState(false);
     const userSignin = useSelector(state => state.userSignin);
     let { userInfo } = userSignin;
     const listSecret = useSelector(state => state.listSecret);
     let { loading, secrets, error} = listSecret;
-    useEffect(() => {
-        if(userInfo) setAllow(true);
-        else setAllow(false);
-    }, [userInfo]);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getListSecret());
@@ -20,7 +15,7 @@ function AdminScreen(props){
     useEffect(() => {
         console.log(secrets);
     }, [secrets])
-    if(isAllow)
+    if(userInfo)
     return(
         <div>
             <p>Admin Screen</p>
