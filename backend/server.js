@@ -60,7 +60,8 @@ const main = () => {
     createInitialAdmin();
     setInterval( async () => {
         try {
-            const deleted = await Secret.deleteMany({ $where: function(){ return this.expire < new Date().getTime()}});
+            const now = new Date().getTime();
+            const deleted = await Secret.deleteMany({ expire: { $lt: now }});
             if(deleted.deletedCount > 0) {
                 console.log(deleted.deletedCount +" secrets have been expired.");   
             }
