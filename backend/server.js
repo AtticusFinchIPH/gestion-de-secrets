@@ -7,13 +7,7 @@ import secretRoute from './routes/secretRoute';
 import bodyParse from 'body-parser';
 import Secret from './models/secretModel';
 
-const path = require('path')
-// Serve static files from the React frontend app
-app.use(express.static(path.join(__dirname, 'frontend/build')))
-// Anything that doesn't match the above, send back index.html
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/frontend/build/index.html'))
-})
+
 
 dotenv.config();
 
@@ -25,6 +19,14 @@ mongoose.connect(mongodbUrl, {
 }).catch(error => console.log(error.reason));
 
 const app = express();
+
+// const path = require('path')
+// // Serve static files from the React frontend app
+// app.use(express.static(path.join(__dirname, 'frontend/build')))
+// // Anything that doesn't match the above, send back index.html
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname + '/frontend/build/index.html'))
+// })
 
 app.use(bodyParse.json());
 app.use("/api/users", userRoute);
