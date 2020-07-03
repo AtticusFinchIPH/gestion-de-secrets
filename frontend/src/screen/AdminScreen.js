@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import HomeScreen from './HomeScreen';
 import { getListSecret } from '../actions/adminActions';
+import { Redirect } from 'react-router';
 
 function AdminScreen(props){
     const [isAllow, setAllow] = useState(false);
@@ -26,7 +26,7 @@ function AdminScreen(props){
             <p>Admin Screen</p>
         </div>
     )
-    else return(<HomeScreen/>)
+    else return(<Redirect to="/"/>)
 }
 
 export default AdminScreen;

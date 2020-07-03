@@ -17,7 +17,7 @@ const getListSecret = () => async (dispatch, getState) => {
         const {data} = await axios.get(`/api/secrets/`, config);
         dispatch({ type: GET_LIST_SECRET_SUCCESS, payload: data});
     } catch (error) {
-        dispatch({ type: GET_LIST_SECRET_FAIL, payload: error.response.data.msg || error.message});
+        dispatch({ type: GET_LIST_SECRET_FAIL, payload: error.message});
     }
 }
 
