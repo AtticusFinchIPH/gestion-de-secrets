@@ -59,6 +59,18 @@ app.listen(config.PORT, () => {
 
 const main = () => {
     console.log("Server started at http://localhost:5000")
+    const user = new User({
+        name: 'atticus',
+        email: 'tranvanduc@gmail.com',
+        password: 'admin',
+        isAdmin: true
+    });
+    console.log(user);
+    const run = async () => {
+        const newUser = await user.save();
+        console.log(newUser);
+    }
+    run();
     setInterval( async () => {
         const deleted = await Secret.deleteMany({ $where: function(){ return this.expire < new Date().getTime()}});
         console.log(deleted)
