@@ -36,23 +36,6 @@ app.get("/api/sayHello", (req, res) => {
     res.send("Hello, come get me!");
 });
 
-app.get("/api/secrets", async (req, res) => {
-    console.log("Create Admin from server...");
-    try {
-        const user = new User({
-            name: 'atticus',
-            email: 'tranvanduc@gmail.com',
-            password: 'admin',
-            isAdmin: true
-        });
-        console.log(user);
-        const newUser = await user.save();
-        res.send(user);
-    } catch (error) {
-        res.send({msg: error.message});
-    }
-});
-
 app.listen(config.PORT, () => {
     main();
 });
