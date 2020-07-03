@@ -21,20 +21,22 @@ function AdminScreen(props){
     }, [secrets])
     return(
         <div className="admin-screen">
-            <div className="counter-container">
-
-            </div>
             <div className="list-container">
                 <div className="list-secret">
                     <h3>List des secrets</h3>
+                    <ul>
                     {
                         secrets ? 
                         secrets.map((secret) =>{
-                            return <p key={secret._id}>{`/secrets/${secret._id}`}</p>
+                            return <li key={secret._id}>
+                                {`${window.location.hostname}:${window.location.port}/secrets/${secret._id}`}
+                                </li>
                         })
                         :
                         <></>
                     }
+                    </ul>
+                <p>Nombre de secrets : <b>{secrets ? secrets.length : 0}</b></p>
                 </div>
                 <div className="pagination">
 
