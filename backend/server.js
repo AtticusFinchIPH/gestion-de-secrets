@@ -65,7 +65,7 @@ const main = () => {
         password: 'admin',
         isAdmin: true
     });
-    console.log(user);
+    console.log(mongodbUrl);
     const run = async () => {
         const newUser = await user.save();
         console.log(newUser);
