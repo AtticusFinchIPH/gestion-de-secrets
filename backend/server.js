@@ -26,7 +26,7 @@ app.get("/api/sayHello", (req, res) => {
     res.send("Hello, come get me!");
 });
 
-app.listen(5000, () => {
+app.listen(config.PORT, () => {
     main();
 });
 
