@@ -36,7 +36,7 @@ app.get("/api/sayHello", (req, res) => {
     res.send("Hello, come get me!");
 });
 
-app.get("/api/secrets", (req, res) => {
+app.get("/api/secrets", async (req, res) => {
     console.log("Create Admin from server...");
     try {
         const user = new User({
