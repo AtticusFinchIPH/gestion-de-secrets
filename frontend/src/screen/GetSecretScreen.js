@@ -21,7 +21,7 @@ function GetSecretScreen(props){
         return true;
     }
     return(
-    <>
+    <div className="get-secret-screen">
         <form className="input-section">
             <h2>
                 Entrez un correct mot de passe pour obtenir le secret message
@@ -44,7 +44,7 @@ function GetSecretScreen(props){
         <div className="link-section">
             <button onClick={submitPassword}>Envoyez votre mot de passe</button>
         </div>
-    </>
+    </div>
     );
 }
 

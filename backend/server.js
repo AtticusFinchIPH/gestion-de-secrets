@@ -34,8 +34,9 @@ const main = () => {
     console.log("Server started at http://localhost:5000")
     setInterval( async () => {
         const deleted = await Secret.deleteMany({ $where: function(){ return this.expire < new Date().getTime()}});
+        console.log(deleted)
         if(deleted.deletedCount > 0) {
-            console.log(deleted.deletedCount +" secrets have been deleted.");   
+            console.log(deleted.deletedCount +" secrets have been expired.");   
         }
     }, 60000)
 }

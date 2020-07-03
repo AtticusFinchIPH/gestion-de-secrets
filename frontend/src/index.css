@@ -105,9 +105,18 @@ button:hover{
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100%;
 }
 
 /* HomeScreen */
+.home-screen, .get-secret-screen{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem 3rem 1rem;
+  box-shadow: 0rem 1rem 5rem rgba(0,0,0,.175);
+}
 .input-section{
   display: flex;
   flex-direction: column;
@@ -236,4 +245,23 @@ input {
   grid-area: pwd-info; 
   margin: auto;
   color: #ff0000;
+}
+
+/* AdminScreen */
+.admin-screen{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  height: 100%;
+  width: 100%;
+}
+.counter-container{
+  height: 100%;
+  width: 33%;
+}
+.list-container{
+  box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+  height: 100%;
+  width: 33%;
 }

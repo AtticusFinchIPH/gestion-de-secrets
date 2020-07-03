@@ -6,10 +6,11 @@ import { isAdmin, isAuth } from '../util';
 const router = express.Router();
 
 const algorithm = 'aes-128-cbc';
-const FIFTEEN_MINS = 1, TWENTYFOUR_HOURS = 2, ONE_WEEK = 3;
+const FIFTEEN_MINS = "1", TWENTYFOUR_HOURS = "2", ONE_WEEK = "3";
 
 const calculateLifetime = (lifetime) => {
     const now = new Date().getTime();
+    console.log(lifetime)
     switch (lifetime) {
         case FIFTEEN_MINS:
             return now + 15*60*1000;
@@ -61,7 +62,7 @@ router.post("/id", async (req, res) => {
 // Get list of secret
 router.get("/", isAuth, isAdmin, async (req, res) => {
     const secrets = await Secret.find({});
-    res.status(200).send(secrets);
+    res.status(200).send(secrets); 
 })
 
 export default router;

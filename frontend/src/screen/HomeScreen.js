@@ -38,7 +38,7 @@ function HomeScreen(props){
         dispatch(polluteSecret());
     }
     return(
-    <>
+    <div className="home-screen">
         <form className="input-section">
             <h2>
                 Collez votre mot de passe, message secret ou lien privé ci-dessous
@@ -94,7 +94,7 @@ function HomeScreen(props){
                 : <button onClick={submitSecret}>Créer un lien secret</button>
             }
         </div>
-    </>
+    </div>
     );
 }
 

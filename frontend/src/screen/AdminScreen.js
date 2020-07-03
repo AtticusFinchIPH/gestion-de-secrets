@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getListSecret } from '../actions/adminActions';
-import { Redirect } from 'react-router';
+import { useHistory } from 'react-router';
 
 function AdminScreen(props){
     const userSignin = useSelector(state => state.userSignin);
@@ -9,19 +9,39 @@ function AdminScreen(props){
     const listSecret = useSelector(state => state.listSecret);
     let { loading, secrets, error} = listSecret;
     const dispatch = useDispatch();
+    const history = useHistory();
     useEffect(() => {
         dispatch(getListSecret());
     }, [])
     useEffect(() => {
+        if(!userInfo) history.replace("/"); 
+    }, [userInfo])
+    useEffect(() => {
         console.log(secrets);
     }, [secrets])
-    if(userInfo)
     return(
-        <div>
-            <p>Admin Screen</p>
+        <div className="admin-screen">
+            <div className="counter-container">
+
+            </div>
+            <div className="list-container">
+                <div className="list-secret">
+                    <h3>List des secrets</h3>
+                    {
+                        secrets ? 
+                        secrets.map((secret) =>{
+                            return <p key={secret._id}>{`/secrets/${secret._id}`}</p>
+                        })
+                        :
+                        <></>
+                    }
+                </div>
+                <div className="pagination">
+
+                </div>
+            </div>
         </div>
     )
-    else return(<Redirect to="/"/>)
 }
 
 export default AdminScreen;
