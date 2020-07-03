@@ -182,6 +182,9 @@ button:hover{
   color: #ff8000;
   cursor: pointer;
 }
+.link-clipboard a{
+  color: #ff8000;
+}
 
 /* Signin Screen */
 .form {

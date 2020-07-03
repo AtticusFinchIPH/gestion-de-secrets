@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { createSecret, polluteSecret } from '../actions/secretActions';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { Link } from 'react-router-dom';
 
 function HomeScreen(props){
     const [secret, setSecret] = useState('');
@@ -85,9 +86,12 @@ function HomeScreen(props){
                         <label htmlFor="link" className="link-label">Votre lien secret:</label>
                         <input id="link" name="link" className="link-input" value={window.location.hostname +":"+ window.location.port + link} readOnly={true}/>
                         <div className="link-clipboard">
-                            <CopyToClipboard text={window.location.hostname +":"+ window.location.port + link}>
-                                <i className="fa fa-clipboard fa-lg" aria-hidden="true" title="Copy to clipboard"></i>
+                            <CopyToClipboard text={window.location.hostname +":"+ window.location.port + link} style={{marginRight: "1rem"}}>
+                                <i className="fa fa-link fa-lg" aria-hidden="true" title="Copy to clipboard"></i>
                             </CopyToClipboard>
+                            <Link to={{pathname: `${link}`}} target="_blank">
+                                <i className="fa fa-send fa-lg" aria-hidden="true" title="Access link"></i>
+                            </Link>
                         </div>
                     </div>
                 )
