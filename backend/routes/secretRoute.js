@@ -60,8 +60,7 @@ router.post("/id", async (req, res) => {
 })
 
 // Get list of secret
-// router.get("/", isAuth, isAdmin, async (req, res) => {
-router.get("/", async (req, res) => {
+router.get("/", isAuth, isAdmin, async (req, res) => {
     const secrets = await Secret.find({});
     res.status(200).send(secrets); 
 })

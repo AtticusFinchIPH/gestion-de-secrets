@@ -23,7 +23,6 @@ router.post("/signin", async (req, res) => {
 })
 
 router.get("/createadmin", async (req, res) => {
-    console.log("Create Admin...");
     try {
         const user = new User({
             name: 'atticus',
