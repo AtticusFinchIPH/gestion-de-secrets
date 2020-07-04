@@ -11,7 +11,7 @@ const getListSecret = () => async (dispatch, getState) => {
         })
         const config = {
             headers: {
-                'Authorization': 'Secret ' + userInfo.token
+                'Authorization': 'Bearer ' + userInfo.token
             }
         }
         const {data} = await axios.get(`/api/secrets/`, config);
