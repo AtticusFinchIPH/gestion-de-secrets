@@ -10,7 +10,6 @@ const FIFTEEN_MINS = "1", TWENTYFOUR_HOURS = "2", ONE_WEEK = "3";
 
 const calculateLifetime = (lifetime) => {
     const now = new Date().getTime();
-    console.log(lifetime)
     switch (lifetime) {
         case FIFTEEN_MINS:
             return now + 15*60*1000;
@@ -26,7 +25,7 @@ const calculateLifetime = (lifetime) => {
 // Create new secret
 router.post("/", async (req, res) => {
     const { secret, password, lifetime } = req.body; 
-    const key = crypto.createCipher(algorithm, password); 
+    const key = crypto.createCipheriv(algorithm, password); 
     let secretCode = key.update(secret, 'utf8', 'hex');
     secretCode += key.final('hex');
     const secretModel = new Secret({
@@ -47,7 +46,7 @@ router.post("/id", async (req, res) => {
         const secretModel = await Secret.findById(secretId);
         if(!secretModel) return res.status(403).send({ msg: 'Secret Expired!'});
         try {
-            const key = crypto.createDecipher(algorithm, password);
+            const key = crypto.createDecipheriv(algorithm, password);
             let secret = key.update(secretModel.secret, 'hex', 'utf8');
             secret += key.final('utf8');
             return res.status(200).send(secret);
