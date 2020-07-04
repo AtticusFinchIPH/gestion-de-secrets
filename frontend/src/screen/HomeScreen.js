@@ -39,8 +39,8 @@ function HomeScreen(props){
         dispatch(polluteSecret());
     }
     return(
-    <div className="home-screen">
-        <form className="input-section">
+    <form className="home-screen" onSubmit={submitSecret}>
+        <div className="input-section">
             <h2>
                 Collez votre mot de passe, message secret ou lien privé ci-dessous
             </h2>
@@ -55,8 +55,8 @@ function HomeScreen(props){
                 value={secret} readOnly={link ? true : false}
                 placeholder="Votre contenu secret est à coller ici">           
             </textarea>
-        </form>
-        <form className="keys-section">
+        </div>
+        <div className="keys-section">
             <label htmlFor="pwd" className="pwd-label">Mot de passe:</label>
             <input id="pwd" name="pdw" className="pwd-input" type="text" 
                 onChange={(e) => {
@@ -76,7 +76,7 @@ function HomeScreen(props){
                 <option value="2">24 hours</option>
                 <option value="3">1 week</option>
             </select>
-        </form>
+        </div>
         <div className="link-section">
             {   
                 link 
@@ -95,10 +95,10 @@ function HomeScreen(props){
                         </div>
                     </div>
                 )
-                : <button onClick={submitSecret}>Créer un lien secret</button>
+                : <button type="submit">Créer un lien secret</button>
             }
         </div>
-    </div>
+    </form>
     );
 }
 

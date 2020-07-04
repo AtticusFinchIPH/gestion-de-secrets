@@ -21,8 +21,8 @@ function GetSecretScreen(props){
         return true;
     }
     return(
-    <div className="get-secret-screen">
-        <form className="input-section">
+    <form className="get-secret-screen" onSubmit={submitPassword}>
+        <div className="input-section">
             <h2>
                 Entrez un correct mot de passe pour obtenir le secret message
             </h2>
@@ -33,18 +33,18 @@ function GetSecretScreen(props){
                 value={error ? '' : secret}
                 readOnly={true} placeholder="">           
             </textarea>
-        </form>
-        <form className="pwd-section">
+        </div>
+        <div className="pwd-section">
             <label htmlFor="pwd" className="pwd-label">Mot de passe:</label>
             <input id="pwd" name="pdw" className="pwd-input" type="text" 
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Entrez votre mot de passe ici"/>
             <div className="pwd-info">{error ? error : ''}</div>
-        </form>
-        <div className="link-section">
-            <button onClick={submitPassword}>Envoyez votre mot de passe</button>
         </div>
-    </div>
+        <div className="link-section">
+            <button type="submit">Envoyez votre mot de passe</button>
+        </div>
+    </form>
     );
 }
 
