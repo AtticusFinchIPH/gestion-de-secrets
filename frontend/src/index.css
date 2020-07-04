@@ -208,6 +208,12 @@ button:hover{
   margin-bottom: 1rem;
   margin-top: 1rem;
 }
+#register-admin{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
 input {
   padding: 1rem;
   border: 0.1rem #c0c0c0 solid;

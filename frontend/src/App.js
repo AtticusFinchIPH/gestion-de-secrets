@@ -6,6 +6,7 @@ import HomeScreen from './screen/HomeScreen';
 import SigninScreen from './screen/SigninScreen';
 import GetSecretScreen from './screen/GetSecretScreen';
 import AdminScreen from './screen/AdminScreen';
+import RegisterScreen from './screen/RegisterScreens';
 import { refreshSecret, removeLink } from './actions/secretActions';
 import { logout } from './actions/userActions';
 
@@ -54,6 +55,7 @@ function App() {
         <main className="main">
             <div className="content">
                 <Route exact={true} path="/" component={HomeScreen}/>
+                <Route path="/register" component={RegisterScreen}/>
                 <Route path="/signin" component={SigninScreen}/>
                 <Route path="/secrets/:id" component={GetSecretScreen}/>
                 <Route path="/admin" component={AdminScreen}/>
