@@ -10,14 +10,18 @@ const FIFTEEN_MINS = "1", TWENTYFOUR_HOURS = "2", ONE_WEEK = "3";
 
 const calculateLifetime = (lifetime) => {
     const now = new Date().getTime();
-    switch (lifetime) {
+    switch (String(lifetime)) {
         case FIFTEEN_MINS:
+            console.log("FIFTEEN_MINS");
             return now + 15*60*1000;
         case TWENTYFOUR_HOURS:
+            console.log("TWENTYFOUR_HOURS");
             return now + 24*60*60*1000;
         case ONE_WEEK:
+            console.log("ONE_WEEK");
             return now + 7*24*60*60*1000;
         default:
+            console.log("NOW");
             return now;
     }
 }
@@ -28,6 +32,7 @@ router.post("/", async (req, res) => {
     const key = crypto.createCipher(algorithm, password); 
     let secretCode = key.update(secret, 'utf8', 'hex');
     secretCode += key.final('hex');
+    console.log(lifetime);
     const secretModel = new Secret({
         secret : secretCode,
         expire: calculateLifetime(lifetime),
