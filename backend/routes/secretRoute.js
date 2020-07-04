@@ -25,7 +25,7 @@ const calculateLifetime = (lifetime) => {
 // Create new secret
 router.post("/", async (req, res) => {
     const { secret, password, lifetime } = req.body; 
-    const key = crypto.createCipheriv(algorithm, password); 
+    const key = crypto.createCipher(algorithm, password); 
     let secretCode = key.update(secret, 'utf8', 'hex');
     secretCode += key.final('hex');
     const secretModel = new Secret({
@@ -46,7 +46,7 @@ router.post("/id", async (req, res) => {
         const secretModel = await Secret.findById(secretId);
         if(!secretModel) return res.status(403).send({ msg: 'Secret Expired!'});
         try {
-            const key = crypto.createDecipheriv(algorithm, password);
+            const key = crypto.createDecipher(algorithm, password);
             let secret = key.update(secretModel.secret, 'hex', 'utf8');
             secret += key.final('utf8');
             return res.status(200).send(secret);
