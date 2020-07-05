@@ -24,7 +24,7 @@ function HomeScreen(props){
     const dispatch = useDispatch();
     const submitSecret = (e) => {
         e.preventDefault();
-        if(isValidate()) dispatch(createSecret({secret, password, lifetime, userId: userInfo._id}));
+        if(isValidate()) dispatch(createSecret({secret, password, lifetime, userId: userInfo ? userInfo._id : null}));
     }
     const isValidate = () => {
         if(!secret) {

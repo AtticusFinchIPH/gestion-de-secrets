@@ -26,6 +26,7 @@ function AdminScreen(props){
     }, [secrets])
     const chooseSecret = (secret) => {
         if(secret.userId) setUserName(secret.userId.name);
+        else setUserName('Anonymous user');
         setViewed(String(secret.viewed));
         setLink(secret.secret);
     }
