@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import nodemailer from 'nodemailer';
 import config from './config';
 
 const getToken = (user) => {
@@ -34,4 +35,31 @@ const isAdmin = (req, res, next) => {
     return res.status(401).send({ msg: 'Admin Token is not valid'});
 }
 
-export {getToken, isAuth, isAdmin};
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    type: "SMTP",
+    host: "smtp.gmail.com",
+    secure: true,
+    auth: {
+      user: config.GMAIL_USER,
+      pass: config.GMAIL_PASS
+    }
+});
+
+const notifyEmail = (to)=> {
+    const mailOptions = {
+        from: config.GMAIL_USER,
+        to,
+        subject: 'Notify viewed secret',
+        text: 'Hi, your secret has been seen. ' 
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+    });
+}
+
+export {getToken, isAuth, isAdmin, notifyEmail};

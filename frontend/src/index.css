@@ -129,9 +129,10 @@ button:hover{
   display: grid;
   grid-template-areas: 
   "pwd-label pwd-input"
-  "lft-label lft-input";
+  "lft-label lft-input"
+  "email-label email-input";
   grid-template-columns: 1fr 3fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   gap: 1rem;
   width: 60rem;
   padding: 1rem;
@@ -151,6 +152,14 @@ button:hover{
 }
 .keys-section .lft-input{
   grid-area: lft-input;  
+}
+.keys-section .email-label{
+  grid-area: email-label;  
+  text-align: right;
+  margin: 1rem;
+}
+.keys-section .email-input{
+  grid-area: email-input;  
 }
 .link-section{
   display: flex;

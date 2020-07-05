@@ -8,6 +8,7 @@ function HomeScreen(props){
     const [secret, setSecret] = useState('');
     const [password, setPassword] = useState('');
     const [lifetime, setLifetime] = useState(1);
+    const [email, setEmail] = useState('');
     const userSignin = useSelector(state => state.userSignin);
     let { userInfo } = userSignin;
     const linkSecret = useSelector(state => state.linkSecret);
@@ -24,7 +25,7 @@ function HomeScreen(props){
     const dispatch = useDispatch();
     const submitSecret = (e) => {
         e.preventDefault();
-        if(isValidate()) dispatch(createSecret({secret, password, lifetime, userId: userInfo ? userInfo._id : null}));
+        if(isValidate()) dispatch(createSecret({secret, password, lifetime, userId: userInfo ? userInfo._id : null, email}));
     }
     const isValidate = () => {
         if(!secret) {
@@ -78,6 +79,14 @@ function HomeScreen(props){
                 <option value="2">24 hours</option>
                 <option value="3">1 week</option>
             </select>
+            <label htmlFor="email" className="email-label">Email notifié:</label>
+            <input id="email" name="email" className="email-input" type="email" 
+                onChange={(e) => {
+                    makePollution();
+                    setEmail(e.target.value)}
+                }
+                value={email}  readOnly={link ? true : false}
+                placeholder="Nous vous notifierons quand votre secret est vue (optionnel)"/>
         </div>
         <div className="link-section">
             {   

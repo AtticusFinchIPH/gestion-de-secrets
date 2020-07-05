@@ -2,7 +2,7 @@ import express from 'express';
 import Secret from '../models/secretModel';
 import User from '../models/userModel';
 import crypto from 'crypto';
-import { isAdmin, isAuth } from '../util';
+import { isAdmin, isAuth, notifyEmail } from '../util';
 
 const router = express.Router();
 
@@ -46,14 +46,15 @@ const findUserId = async (userId) => {
 // Create new secret
 router.post("/", async (req, res) => {
     try {
-        const { secret, password, lifetime, userId } = req.body; 
+        const { secret, password, lifetime, userId, email } = req.body; 
         const userIdFound = userId ? await findUserId(userId) : null;
-        console.log('userId: ' + userId + ' userIdFound: ' +userIdFound)
+        console.log('userId: ' + userId + ' userIdFound: ' +userIdFound+ ' email: ' +email)
         const secretCode = encode(secret, password);
         const secretModel = new Secret({
             secret : secretCode,
             expire: calculateLifetime(lifetime),
             viewed: false,
+            email,
             userId: userIdFound ? userIdFound : null,
         })
         const newSecret = await secretModel.save();
@@ -85,6 +86,7 @@ router.post("/id", async (req, res) => {
             await Secret.findByIdAndUpdate(secretId, {
                 viewed: true
             });
+            if(secretModel.email) notifyEmail(secretModel.email);
             return res.status(200).send(secret);
         } catch (error) {
             return res.status(403).send({ msg: 'Wrong Password!'});
