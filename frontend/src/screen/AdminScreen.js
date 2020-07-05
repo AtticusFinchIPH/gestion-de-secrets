@@ -62,9 +62,9 @@ function AdminScreen(props){
                         (
                             <div className="link-show">
                                 <label htmlFor="link" className="link-label">Lien secret:</label>
-                                <input id="link" name="link" className="link-input" value={window.location.hostname +":"+ window.location.port +"/"+ link} readOnly={true}/>
+                                <input id="link" name="link" className="link-input" value={window.location.hostname +":"+ window.location.port +"/secrets/"+ link} readOnly={true}/>
                                 <div className="link-clipboard">
-                                    <CopyToClipboard text={window.location.hostname +":"+ window.location.port +"/"+ link} style={{marginRight: "1rem"}}>
+                                    <CopyToClipboard text={window.location.hostname +":"+ window.location.port +"/secrets/"+ link} style={{marginRight: "1rem"}}>
                                         <i className="fa fa-link fa-lg" aria-hidden="true" title="Copy to clipboard"></i>
                                     </CopyToClipboard>
                                     {/* <Link to={{pathname: `${link}`}} target="_blank">
