@@ -8,10 +8,12 @@ function HomeScreen(props){
     const [secret, setSecret] = useState('');
     const [password, setPassword] = useState('');
     const [lifetime, setLifetime] = useState(1);
+    const userSignin = useSelector(state => state.userSignin);
+    let { userInfo } = userSignin;
     const linkSecret = useSelector(state => state.linkSecret);
     let { loading, link, error } = linkSecret;
     const isFreshSecret = useSelector(state => state.isFreshSecret);
-
+    
     useEffect(() => {
         if(isFreshSecret){
             setSecret('');
@@ -22,7 +24,7 @@ function HomeScreen(props){
     const dispatch = useDispatch();
     const submitSecret = (e) => {
         e.preventDefault();
-        if(isValidate()) dispatch(createSecret({secret, password, lifetime}));
+        if(isValidate()) dispatch(createSecret({secret, password, lifetime, userId: userInfo._id}));
     }
     const isValidate = () => {
         if(!secret) {
