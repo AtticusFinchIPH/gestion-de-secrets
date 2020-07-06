@@ -67,9 +67,9 @@ function AdminScreen(props){
                                     <CopyToClipboard text={window.location.hostname +":"+ window.location.port +"/secrets/"+ link} style={{marginRight: "1rem"}}>
                                         <i className="fa fa-link fa-lg" aria-hidden="true" title="Copy to clipboard"></i>
                                     </CopyToClipboard>
-                                    {/* <Link to={{pathname: `${link}`}} target="_blank">
+                                    <Link to={{pathname: `${link}`}} target="_blank">
                                         <i className="fa fa-send fa-lg" aria-hidden="true" title="Access link"></i>
-                                    </Link> */}
+                                    </Link>
                                 </div>
                             </div>
                         )

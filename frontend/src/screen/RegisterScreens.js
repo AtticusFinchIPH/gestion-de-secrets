@@ -74,12 +74,12 @@ function RegisterScreen(props){
         <li>
           <button type="submit" className="button primary">Register</button>
         </li>
-        {/* <li>
+        <li>
             Already have an account?
         </li>
         <li>
           <Link to="/signin" className="button-register">Signin your Secret account</Link>
-        </li> */}
+        </li>
       </ul>
     </form>
   </div>

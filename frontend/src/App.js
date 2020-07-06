@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {BrowserRouter, Route, Link} from 'react-router-dom';
+import {BrowserRouter, Route, Link, Switch} from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import './App.css';
 import HomeScreen from './screen/HomeScreen';
@@ -54,11 +54,13 @@ function App() {
         </aside>
         <main className="main">
             <div className="content">
+              <Switch>
                 <Route exact={true} path="/" component={HomeScreen}/>
                 <Route path="/register" component={RegisterScreen}/>
                 <Route path="/signin" component={SigninScreen}/>
                 <Route path="/secrets/:id" component={GetSecretScreen}/>
                 <Route path="/admin" component={AdminScreen}/>
+              </Switch>
             </div>           
         </main>
         <footer className="footer">All right reserved</footer>
