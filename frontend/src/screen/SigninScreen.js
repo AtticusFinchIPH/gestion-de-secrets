@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { signin } from '../actions/userActions';
+import { signin, googleSignin } from '../actions/userActions';
+import { GoogleButton } from 'react-google-button';
 
 function SigninScreen(props) {
 
@@ -23,6 +24,10 @@ function SigninScreen(props) {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(signin(email, password));
+  }
+  const signinGoogle = (e) => {
+    e.preventDefault();
+    dispatch(googleSignin());
   }
   return <div className="form">
     <form onSubmit={submitHandler} >
@@ -54,6 +59,12 @@ function SigninScreen(props) {
         </li>
         <li>
           <Link to="/register" className="button-register" >Create your Secret account</Link>
+        </li>
+        <li style={{textAlign: 'center'}}>
+          --- Or ---
+        </li>
+        <li style={{alignItems: 'center'}}>
+          <GoogleButton onClick={signinGoogle} type='light'/>
         </li>
       </ul>
     </form>
