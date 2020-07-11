@@ -1,6 +1,7 @@
 import express from 'express';
 import User from '../models/userModel'
 import { getToken } from '../util';
+import passport from 'passport';
 
 const router = express.Router();
 
@@ -62,6 +63,19 @@ router.get("/createadmin", async (req, res) => {
     } catch (error) {
         res.send({msg: error.message});
     }
+})
+
+router.get("/google", (req, res, next) => {
+    console.log("-> before /google");
+    next();
+}, passport.authenticate('google', {
+    scope: ['profile', 'email']
+}))
+
+router.get("/google/redirect", passport.authenticate('google', { failureRedirect: '/signin' }), (req, res) => {
+    console.log('-> /google/redirect');
+    console.log("user: "+req.user);
+    return res.status(200).send(req.user);
 })
 
 export default router;
