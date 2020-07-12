@@ -74,8 +74,14 @@ router.get("/google", (req, res, next) => {
 
 router.get("/google/redirect", passport.authenticate('google', { failureRedirect: '/signin' }), (req, res) => {
     console.log('-> /google/redirect');
-    console.log("user: "+req.user);
-    return res.status(200).send(req.user);
+    const user = {
+        _id: req.user.id,
+        name: req.user.name,
+        email: req.user.email,
+        isAdmin: req.user.isAdmin,
+        token: getToken(req.user),
+    }
+    return res.render('googleLogin', user);
 })
 
 export default router;

@@ -25,10 +25,39 @@ function SigninScreen(props) {
     e.preventDefault();
     dispatch(signin(email, password));
   }
-  const signinGoogle = (e) => {
-    e.preventDefault();
-    dispatch(googleSignin());
-  }
+  // const SERVER_URL = 'http://localhost:5000'; // for develop
+  const SERVER_URL = 'https://secret-management.herokuapp.com' // for production
+  const receiveMessage = event => {
+    if (event.origin !== SERVER_URL) {
+      console.log("Different origin: "+ event.origin);
+      return;
+    }
+    const { data } = event;
+    if (data) {   
+      console.log(data);
+      dispatch(googleSignin(data));
+    }
+  };
+
+  let windowObjectReference = null;
+  let previousUrl = null;
+  const GOOGLE_API_PATH = '/api/users/google';
+
+  const signinGoogle = () => {
+    window.removeEventListener('message', receiveMessage);
+
+    const strWindowFeatures = 'toolbar=no, menubar=no, width=600, height=700, top=100, left=100';
+    if (windowObjectReference === null || windowObjectReference.closed) {
+      windowObjectReference = window.open(GOOGLE_API_PATH, '', strWindowFeatures);
+    } else if (previousUrl !== GOOGLE_API_PATH) {
+      windowObjectReference = window.open(GOOGLE_API_PATH, '', strWindowFeatures);
+      windowObjectReference.focus();
+    } else {
+      windowObjectReference.focus();
+    }
+    window.addEventListener('message', event => receiveMessage(event), false);
+    previousUrl = GOOGLE_API_PATH;
+  };
   return <div className="form">
     <form onSubmit={submitHandler} >
       <ul className="form-container">

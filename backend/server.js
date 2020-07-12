@@ -26,6 +26,7 @@ mongoose.connect(mongodbUrl, {
 
 const app = express();
 app.use(bodyParse.json());
+app.set('view engine', 'ejs');
 app.use(cookieSession({
     maxAge: 24*60*60*1000,
     keys: [config.COOKIE_SECRET]

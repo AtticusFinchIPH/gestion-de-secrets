@@ -50,16 +50,8 @@ const logout = () => (dispatch) => {
   dispatch({ type: USER_LOGOUT })
 }
 
-const googleSignin = () => async (dispatch) => {
-  dispatch({ type: USER_SIGNIN_REQUEST });
-  try {
-    const { data } = await axios.get('/api/users/google', { crossDomain: true });
-    console.log(data);
-    dispatch({ type: USER_SIGNIN_SUCCESS, payload: data});
-    Cookie.set('userInfo', JSON.stringify(data));
-  } catch (error) {
-    console.log(error);
-    dispatch({ type: USER_SIGNIN_FAIL, payload: error.message })
-  }
+const googleSignin = (data) => async (dispatch) => {
+  dispatch({ type: USER_SIGNIN_SUCCESS, payload: data});
+  Cookie.set('userInfo', JSON.stringify(data));
 }
 export { signin, register, logout, update, googleSignin };

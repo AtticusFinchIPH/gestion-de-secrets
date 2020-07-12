@@ -4,5 +4,4 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 // the Express server running on port 5000.
 module.exports = function(app) {
   app.use(createProxyMiddleware('/api',{ target: "http://localhost:5000" }));
-  // app.use(createProxyMiddleware('/api/users/google',{ target: "https://accounts.google.com" }));
 };

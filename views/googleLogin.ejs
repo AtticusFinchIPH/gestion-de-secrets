@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Google Login</title>
+    </head>
+    <body>
+        <% if (name) { %>
+            <h2>Welcome <%= name %>!</h2>
+        <% } %>
+        <div id="mydiv" 
+            data-id="<%= _id %>"
+            data-name="<%= name %>"
+            data-email="<%= email %>"
+            data-isadmin="<%= isAdmin %>"
+            data-token="<%= token %>">
+        </div>
+        <script>           
+            const _id = document.getElementById('mydiv').dataset.id;
+            const name = document.getElementById('mydiv').dataset.name;
+            const email = document.getElementById('mydiv').dataset.email;
+            const isAdmin = document.getElementById('mydiv').dataset.isadmin;
+            const token = document.getElementById('mydiv').dataset.token;
+            const user = { _id, name, email, isAdmin, token };
+            console.log(user);
+            if(window.opener) {
+                window.opener.postMessage(user, "*");
+                window.close();
+            };
+        </script>
+    </body>
+</html>
