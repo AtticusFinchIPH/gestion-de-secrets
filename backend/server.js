@@ -6,6 +6,10 @@ import path from 'path';
 import userRoute from './routes/userRoute';
 import secretRoute from './routes/secretRoute';
 import bodyParse from 'body-parser';
+import passport from 'passport'
+import passportSetup from './passport-setup';
+import cookieSession from 'cookie-session';
+import cors from 'cors';
 import Secret from './models/secretModel';
 
 import User from './models/userModel'
@@ -22,6 +26,21 @@ mongoose.connect(mongodbUrl, {
 
 const app = express();
 app.use(bodyParse.json());
+app.set('view engine', 'ejs');
+app.use(cookieSession({
+    maxAge: 24*60*60*1000,
+    keys: [config.COOKIE_SECRET]
+}))
+app.use(passport.initialize());
+app.use(passport.session());
+var corsOption = {
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    exposedHeaders: ['x-auth-token']
+};
+app.use(cors(corsOption));
+
 app.use("/api/users", userRoute);
 app.use("/api/secrets", secretRoute);
 app.get("/api/sayHello", (req, res) => {

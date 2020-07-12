@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { signin } from '../actions/userActions';
+import { signin, googleSignin } from '../actions/userActions';
+import { GoogleButton } from 'react-google-button';
 
 function SigninScreen(props) {
 
@@ -24,6 +25,39 @@ function SigninScreen(props) {
     e.preventDefault();
     dispatch(signin(email, password));
   }
+  // const SERVER_URL = 'http://localhost:5000'; // for develop
+  const SERVER_URL = 'https://secret-management.herokuapp.com' // for production
+  const receiveMessage = event => {
+    if (event.origin !== SERVER_URL) {
+      console.log("Different origin: "+ event.origin);
+      return;
+    }
+    const { data } = event;
+    if (data) {   
+      console.log(data);
+      dispatch(googleSignin(data));
+    }
+  };
+
+  let windowObjectReference = null;
+  let previousUrl = null;
+  const GOOGLE_API_PATH = '/api/users/google';
+
+  const signinGoogle = () => {
+    window.removeEventListener('message', receiveMessage);
+
+    const strWindowFeatures = 'toolbar=no, menubar=no, width=600, height=700, top=100, left=100';
+    if (windowObjectReference === null || windowObjectReference.closed) {
+      windowObjectReference = window.open(GOOGLE_API_PATH, '', strWindowFeatures);
+    } else if (previousUrl !== GOOGLE_API_PATH) {
+      windowObjectReference = window.open(GOOGLE_API_PATH, '', strWindowFeatures);
+      windowObjectReference.focus();
+    } else {
+      windowObjectReference.focus();
+    }
+    window.addEventListener('message', event => receiveMessage(event), false);
+    previousUrl = GOOGLE_API_PATH;
+  };
   return <div className="form">
     <form onSubmit={submitHandler} >
       <ul className="form-container">
@@ -54,6 +88,12 @@ function SigninScreen(props) {
         </li>
         <li>
           <Link to="/register" className="button-register" >Create your Secret account</Link>
+        </li>
+        <li style={{textAlign: 'center'}}>
+          --- Or ---
+        </li>
+        <li style={{alignItems: 'center'}}>
+          <GoogleButton onClick={signinGoogle} type='light'/>
         </li>
       </ul>
     </form>
