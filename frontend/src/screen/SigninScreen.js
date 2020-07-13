@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { signin, googleSignin } from '../actions/userActions';
 import { GoogleButton } from 'react-google-button';
+import { SERVER_URL } from '../constants/commonConstants'
 
 function SigninScreen(props) {
 
@@ -25,8 +26,6 @@ function SigninScreen(props) {
     e.preventDefault();
     dispatch(signin(email, password));
   }
-  // const SERVER_URL = 'http://localhost:5000'; // for develop
-  const SERVER_URL = 'https://secret-management.herokuapp.com' // for production
   const receiveMessage = event => {
     if (event.origin !== SERVER_URL) {
       console.log("Different origin: "+ event.origin);
