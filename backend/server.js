@@ -1,4 +1,6 @@
 import express from 'express';
+import http from 'http';
+import socketIO from 'socket.io';
 import dotenv from 'dotenv';
 import config from './config';
 import mongoose from 'mongoose';
@@ -25,6 +27,8 @@ mongoose.connect(mongodbUrl, {
 }).catch(error => console.log(error.reason));
 
 const app = express();
+const server = http.createServer(app);
+const io = socketIO(server);
 app.use(bodyParse.json());
 app.set('view engine', 'ejs');
 app.use(cookieSession({
@@ -53,7 +57,11 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/../frontend/build/index.html'))
 })
 
-app.listen(config.PORT, () => {
+io.on('connection', (socket) => {
+
+})
+
+server.listen(config.PORT, () => {
     main();
 });
 
