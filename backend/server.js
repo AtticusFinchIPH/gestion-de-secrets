@@ -26,6 +26,21 @@ mongoose.connect(mongodbUrl, {
     useFindAndModify: false
 }).catch(error => console.log(error.reason));
 
+// const changeStreamSecret = Secret.watch();
+// changeStreamSecret.on('change', function(change) {
+//     console.log('COLLECTION CHANGED');
+
+//     User.find({}, (err, data) => {
+//         // if (err) throw err;
+
+//         if (data) {
+//             // RESEND ALL USERS
+//             // socket.emit('users', data);
+//             console.log(data);
+//         }
+//     });
+// });
+
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
