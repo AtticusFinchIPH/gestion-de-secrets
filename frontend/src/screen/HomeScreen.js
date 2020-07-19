@@ -5,7 +5,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Link } from 'react-router-dom';
 
 function HomeScreen(props){
-    const [isText, setIsText] = useState(true);
+    const [isFile, setIsFile] = useState(false);
     const [secret, setSecret] = useState('');
     const [password, setPassword] = useState('');
     const [lifetime, setLifetime] = useState(1);
@@ -22,9 +22,11 @@ function HomeScreen(props){
     
     useEffect(() => {
         if(isFreshSecret){
+            setIsFile(false);
             setSecret('');
             setPassword('');
             setLifetime(1);
+            console.log(secret)
         }
     }, [isFreshSecret])
     const dispatch = useDispatch();
@@ -53,8 +55,12 @@ function HomeScreen(props){
                 Collez votre mot de passe, message secret ou lien privé ci-dessous
             </h2>
             <div className="can-toggle">
-                <input id="toggle" type="checkbox" value={isText} onChange={(e) => setIsText(!isText)}/>
-                <label for="toggle">
+                <input id="toggle" type="checkbox" 
+                    checked={!isFile} 
+                    onChange={(e) => {
+                        makePollution();
+                        setIsFile(!isFile)}}/>
+                <label htmlFor="toggle">
                     <div className="can-toggle__switch" data-checked="Text" data-unchecked="Fichier"></div>
                 </label>
             </div>
@@ -62,7 +68,7 @@ function HomeScreen(props){
                 Ne stockez aucune information confidentielle dans vos emails ou fils de discussion
             </p>
             {
-                isText ?
+                isFile ?
                 <div className="input-upload">
                     <label >Fichier secret:</label>
                     <input type="file" onChange={onFileChange} /> 
