@@ -18,8 +18,8 @@ function HomeScreen(props){
 
     const onFileChange = (e) => { 
         setSecret(e.target.files[0]);      
-      }; 
-    
+    };
+
     useEffect(() => {
         if(isFreshSecret){
             setIsFile(false);
@@ -69,10 +69,19 @@ function HomeScreen(props){
             </p>
             {
                 isFile ?
+                <>
                 <div className="input-upload">
-                    <label >Fichier secret:</label>
-                    <input type="file" onChange={onFileChange} /> 
+                    <label className="label-upload">Fichier secret:</label>
+                    <input type="file" onChange={onFileChange} />
+                    {secret && secret.type
+                    ?<>
+                    <label className="label-choisi">Fichier choisi:</label>
+                    <p>{secret.name}</p>
+                    </>
+                    :<></>
+                    }
                 </div>
+                </>
                 :
                 <textarea rows="10" cols="80" 
                     onChange={(e) => {
