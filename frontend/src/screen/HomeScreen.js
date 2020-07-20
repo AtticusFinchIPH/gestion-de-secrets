@@ -5,6 +5,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Link } from 'react-router-dom';
 
 function HomeScreen(props){
+    const [isFile, setIsFile] = useState(false);
     const [secret, setSecret] = useState('');
     const [password, setPassword] = useState('');
     const [lifetime, setLifetime] = useState(1);
@@ -14,9 +15,22 @@ function HomeScreen(props){
     const linkSecret = useSelector(state => state.linkSecret);
     let { loading, link, error } = linkSecret;
     const isFreshSecret = useSelector(state => state.isFreshSecret);
-    
+
+    const onFileChange = (e) => { 
+        const file = e.target.files[0];
+        const extension = file.name.split('.').pop();
+        const allowTypes = [ 'txt', 'csv'];
+        if(allowTypes.indexOf(extension.toLowerCase()) === -1) {
+            e.target.value = null;
+            alert("Désolé, nous n'acceptons que les extentions .txt, .csv");
+            return;
+        }
+        setSecret(file);      
+    };
+
     useEffect(() => {
         if(isFreshSecret){
+            setIsFile(false);
             setSecret('');
             setPassword('');
             setLifetime(1);
@@ -47,17 +61,45 @@ function HomeScreen(props){
             <h2>
                 Collez votre mot de passe, message secret ou lien privé ci-dessous
             </h2>
+            <div className="can-toggle">
+                <input id="toggle" type="checkbox" 
+                    checked={!isFile} 
+                    onChange={(e) => {
+                        makePollution();
+                        setIsFile(!isFile)}}/>
+                <label htmlFor="toggle">
+                    <div className="can-toggle__switch" data-checked="Text" data-unchecked="Fichier"></div>
+                </label>
+            </div>
             <p>
                 Ne stockez aucune information confidentielle dans vos emails ou fils de discussion
             </p>
-            <textarea rows="10" cols="80" 
-                onChange={(e) => {
-                    makePollution();
-                    setSecret(e.target.value)}
-                }
-                value={secret} readOnly={link ? true : false}
-                placeholder="Votre contenu secret est à coller ici">           
-            </textarea>
+            {
+                isFile ?
+                <>
+                <div className="input-upload">
+                    <label className="label-upload">Fichier secret:</label>
+                    <input type="file" onChange={onFileChange} readOnly={link ? true : false}/>
+                    {secret && secret.type
+                    ?<>
+                    <label className="label-choisi">Fichier choisi:</label>
+                    <p>{secret.name}</p>
+                    </>
+                    :<></>
+                    }
+                </div>
+                </>
+                :
+                <textarea rows="10" cols="80" 
+                    onChange={(e) => {
+                        makePollution();
+                        setSecret(e.target.value)}
+                    }
+                    value={secret && typeof secret !== 'string' ? 'Si votre secret est un fichier, ne touchez pas ce champ!!!' : secret} readOnly={link ? true : false}
+                    placeholder="Votre contenu secret est à coller ici">           
+                </textarea>
+            }
+            
         </div>
         <div className="keys-section">
             <label htmlFor="pwd" className="pwd-label">Mot de passe:</label>

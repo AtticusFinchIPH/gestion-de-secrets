@@ -3,6 +3,8 @@ import Secret from '../models/secretModel';
 import User from '../models/userModel';
 import crypto from 'crypto';
 import { isAdmin, isAuth, notifyEmail } from '../util';
+import fs from 'fs';
+import path from 'path';
 
 const router = express.Router();
 
@@ -27,11 +29,10 @@ const calculateLifetime = (lifetime) => {
     }
 }
 
-const encode = (secret, password) => {
+const encode = (buffer, password) => {
     const key = crypto.createCipher(algorithm, password); 
-    let secretCode = key.update(secret, 'utf8', 'hex');
-    secretCode += key.final('hex');
-    return secretCode;
+    let crypted = Buffer.concat([key.update(buffer),key.final()]);
+    return crypted;
 }
 
 const findUserId = async (userId) => {
@@ -46,16 +47,22 @@ const findUserId = async (userId) => {
 // Create new secret
 router.post("/", async (req, res) => {
     try {
-        const { secret, password, lifetime, userId, email } = req.body; 
+        let { secret, password, lifetime, userId, email } = req.body; 
+        let fileName = null;
         const userIdFound = userId ? await findUserId(userId) : null;
-        console.log('userId: ' + userId + ' userIdFound: ' +userIdFound+ ' email: ' +email)
-        const secretCode = encode(secret, password);
+        console.log('userId: ' + userId + ' userIdFound: ' +userIdFound+ ' email: ' +email);
+        if(secret.length === 0) {
+            secret = req.files.file.data;
+            fileName = req.files.file.name;
+        }       
+        const secretCode = encode(new Buffer(secret, "utf8"), password);
         const secretModel = new Secret({
             secret : secretCode,
             expire: calculateLifetime(lifetime),
             viewed: false,
             email,
             userId: userIdFound ? userIdFound : null,
+            fileName
         })
         const newSecret = await secretModel.save();
         if(newSecret){
@@ -70,9 +77,8 @@ router.post("/", async (req, res) => {
 
 const decode = (secretModel, password) => {
     const key = crypto.createDecipher(algorithm, password);
-    let secret = key.update(secretModel.secret, 'hex', 'utf8');
-    secret += key.final('utf8');
-    return secret;
+    let dec = Buffer.concat([key.update(secretModel.secret) , key.final()]);
+    return dec;
 }
 
 // Get a secret
@@ -82,12 +88,25 @@ router.post("/id", async (req, res) => {
         const secretModel = await Secret.findById(secretId);
         if(!secretModel) return res.status(403).send({ msg: 'Secret Expired!'});
         try {
-            const secret = decode(secretModel, password);
+            const secret = secretModel.fileName ? decode(secretModel, password) : decode(secretModel, password).toString('utf8');
             await Secret.findByIdAndUpdate(secretId, {
                 viewed: true
             });
-            if(secretModel.email) notifyEmail(secretModel.email);
-            return res.status(200).send(secret);
+            if(secretModel.email) notifyEmail(secretModel.email);           
+            if(secretModel.fileName) { 
+                try{
+                    fs.writeFileSync(path.join(__dirname, `../views/secretFiles/${secretModel.fileName}`), secret);
+                    console.log(`Stored ${secretModel.fileName} in ${__dirname}"\views\secretFiles\" folder`);   
+                    res.setHeader("filename", secretModel.fileName);               
+                    return res.status(200).download(path.join(__dirname, `../views/secretFiles/${secretModel.fileName}`));
+                    // TODO: Clean secretFiles folder
+                }catch(e){
+                    console.log(e);
+                    return res.status(403).send({ msg: 'Send file failed!'}) 
+                }  
+            } else {                         
+                return res.status(200).send(secret);
+            }
         } catch (error) {
             return res.status(403).send({ msg: 'Wrong Password!'});
         }

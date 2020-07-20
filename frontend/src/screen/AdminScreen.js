@@ -28,7 +28,8 @@ function AdminScreen(props){
         if(secret.userId) setUserName(secret.userId.name);
         else setUserName('Anonymous user');
         setViewed(String(secret.viewed));
-        setLink(secret.secret);
+        setLink(secret._id);
+        console.log(secret);
     }
     return(
         <div className="admin-screen">
@@ -67,7 +68,7 @@ function AdminScreen(props){
                                     <CopyToClipboard text={window.location.hostname +":"+ window.location.port +"/secrets/"+ link} style={{marginRight: "1rem"}}>
                                         <i className="fa fa-link fa-lg" aria-hidden="true" title="Copy to clipboard"></i>
                                     </CopyToClipboard>
-                                    <Link to={{pathname: `${link}`}} target="_blank">
+                                    <Link to={{pathname: `${window.location.hostname +":"+ window.location.port +"/secrets/"+ link}`}} target="_blank">
                                         <i className="fa fa-send fa-lg" aria-hidden="true" title="Access link"></i>
                                     </Link>
                                 </div>

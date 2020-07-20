@@ -12,8 +12,8 @@ import passport from 'passport'
 import passportSetup from './passport-setup';
 import cookieSession from 'cookie-session';
 import cors from 'cors';
+import fileUpload from 'express-fileupload';
 import Secret from './models/secretModel';
-
 import User from './models/userModel'
 
 dotenv.config();
@@ -45,6 +45,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 app.use(bodyParse.json());
+app.use(fileUpload());
 app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'ejs');
 app.use(cookieSession({

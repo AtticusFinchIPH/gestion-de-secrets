@@ -8,9 +8,25 @@ const createSecret = ({secret, password, lifetime, userId, email}) => async (dis
             type: CREATE_SECRET_REQUEST,
             payload: newSecret
         })
+        const formData = new FormData();
+        if(typeof secret === 'string') {
+            formData.append('secret', secret)
+        } else {
+            formData.append('secret', '');
+            formData.append('file', secret);
+        } 
+        formData.append('password', password);
+        formData.append('lifetime', lifetime);
+        formData.append('userId', userId);
+        formData.append('email', email);
         const { data } = await axios.post(
             `/api/secrets`,
-            newSecret
+            formData,
+            {
+                headers: {
+                  'content-type': 'multipart/form-data'
+                }
+            }
         );
         dispatch({ type: CREATE_SECRET_SUCCESS, payload: data });
     } catch (error) {
@@ -31,8 +47,11 @@ const getSecret = ({ id, password }) => async (dispatch) => {
             type: GET_SECRET_REQUEST,
             payload: secret
         })
-        const {data} = await axios.post(`/api/secrets/id`, secret);
-        dispatch({ type: GET_SECRET_SUCCESS, payload: data});
+        const {headers, data} = await axios.post(`/api/secrets/id`, secret);
+        if(headers.filename){
+            const file = new File([data], headers.filename);
+            dispatch({ type: GET_SECRET_SUCCESS, payload: file});
+        } else dispatch({ type: GET_SECRET_SUCCESS, payload: data});
     } catch (error) {
         dispatch({ type: GET_SECRET_FAIL, payload: error.response.data.msg || error.message});
     }
