@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { getSecret } from '../actions/secretActions';
 
@@ -7,6 +7,18 @@ function GetSecretScreen(props){
     const [password, setPassword] = useState('');
     const secretObtain = useSelector(state => state.secretObtain);
     const { loading, secret, error } = secretObtain;
+    
+    useEffect(() => {
+        if( secret  && typeof secret !== 'string') {
+            const url = window.URL.createObjectURL(secret);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', secret.name);
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode.removeChild(link);
+        }
+    }, [secret]); 
 
     const dispatch = useDispatch();
     const submitPassword = (e) => {
@@ -30,7 +42,7 @@ function GetSecretScreen(props){
                 Le contenu du secret apparaîtrait ci-dessous avec un bon mot de passe
             </p>
             <textarea rows="10" cols="80" 
-                value={error ? '' : secret}
+                value={error ? '' : (secret  && typeof secret !== 'string' ? 'Votre secret est un fichier' : secret)}
                 readOnly={true} placeholder="">           
             </textarea>
         </div>

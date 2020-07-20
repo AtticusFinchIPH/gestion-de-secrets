@@ -17,7 +17,15 @@ function HomeScreen(props){
     const isFreshSecret = useSelector(state => state.isFreshSecret);
 
     const onFileChange = (e) => { 
-        setSecret(e.target.files[0]);      
+        const file = e.target.files[0];
+        const extension = file.name.split('.').pop();
+        const allowTypes = [ 'txt', 'csv'];
+        if(allowTypes.indexOf(extension.toLowerCase()) === -1) {
+            e.target.value = null;
+            alert("Désolé, nous n'acceptons que les extentions .txt, .csv");
+            return;
+        }
+        setSecret(file);      
     };
 
     useEffect(() => {
@@ -26,7 +34,6 @@ function HomeScreen(props){
             setSecret('');
             setPassword('');
             setLifetime(1);
-            console.log(secret)
         }
     }, [isFreshSecret])
     const dispatch = useDispatch();
@@ -72,7 +79,7 @@ function HomeScreen(props){
                 <>
                 <div className="input-upload">
                     <label className="label-upload">Fichier secret:</label>
-                    <input type="file" onChange={onFileChange} />
+                    <input type="file" onChange={onFileChange} readOnly={link ? true : false}/>
                     {secret && secret.type
                     ?<>
                     <label className="label-choisi">Fichier choisi:</label>
@@ -88,7 +95,7 @@ function HomeScreen(props){
                         makePollution();
                         setSecret(e.target.value)}
                     }
-                    value={secret} readOnly={link ? true : false}
+                    value={secret && typeof secret !== 'string' ? 'Si votre secret est un fichier, ne touchez pas ce champ!!!' : secret} readOnly={link ? true : false}
                     placeholder="Votre contenu secret est à coller ici">           
                 </textarea>
             }
