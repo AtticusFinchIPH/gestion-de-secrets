@@ -95,10 +95,10 @@ router.post("/id", async (req, res) => {
             if(secretModel.email) notifyEmail(secretModel.email);           
             if(secretModel.fileName) { 
                 try{
-                    fs.writeFileSync(path.join(__dirname, `../views/secretFiles/${secretModel.fileName}`), secret);
-                    console.log(`Stored ${secretModel.fileName} in ${__dirname}"\views\secretFiles\" folder`);   
+                    fs.writeFileSync(path.join(__dirname, `../secretFiles/${secretModel.fileName}`), secret);
+                    console.log(`Stored ${secretModel.fileName} in ${__dirname}"\secretFiles\" folder`);   
                     res.setHeader("filename", secretModel.fileName);               
-                    return res.status(200).download(path.join(__dirname, `../views/secretFiles/${secretModel.fileName}`));
+                    return res.status(200).download(path.join(__dirname, `../secretFiles/${secretModel.fileName}`));
                     // TODO: Clean secretFiles folder
                 }catch(e){
                     console.log(e);
