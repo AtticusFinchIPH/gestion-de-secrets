@@ -10,8 +10,8 @@ function RegisterScreen(props){
     const [password, setPassword] = useState('');
     const [rePassword, setRePassword] = useState('');
     const [isAdmin, setAdmin] = useState(false);
-    const userRegister = useSelector(state => state.userRegister);
-    const { loading, userInfo, error } = userRegister;
+    const userSignin = useSelector(state => state.userSignin);
+    const { loading, userInfo, error } = userSignin;
     const dispatch = useDispatch();
     const history = useHistory();
     useEffect(() => {

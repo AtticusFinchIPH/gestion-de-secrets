@@ -38,10 +38,10 @@ const register = (name, email, password, isAdmin) => async (dispatch) => {
   dispatch({ type: USER_REGISTER_REQUEST, payload: { name, email, password, isAdmin } });
   try {
     const { data } = await axios.post("/api/users/register", { name, email, password, isAdmin });
-    dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
+    dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
     Cookie.set('userInfo', JSON.stringify(data));
   } catch (error) {
-    dispatch({ type: USER_REGISTER_FAIL, payload: error.message });
+    dispatch({ type: USER_SIGNIN_FAIL, payload: error.message });
   }
 }
 
